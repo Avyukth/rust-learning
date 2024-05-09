@@ -1,11 +1,11 @@
 #[derive(PartialEq, Eq, Debug, Clone)]
-pub enum LoginRole{
+pub enum LoginRole {
     Admin,
     User,
 }
 
 #[derive(PartialEq, Eq, Debug, Clone)]
-pub enum LoginAction{
+pub enum LoginAction {
     Granted(LoginRole),
     Denied,
 }
@@ -14,7 +14,7 @@ pub fn greet_user(name: &str) -> String {
     format!("Hello {name}")
 }
 
-pub struct  User{
+pub struct User {
     pub username: String,
     pub password: String,
     pub role: LoginRole,
@@ -22,7 +22,7 @@ pub struct  User{
 
 impl User {
     pub fn new(username: &str, password: &str, role: LoginRole) -> User {
-        User{
+        User {
             username: username.to_string(),
             password: password.to_string(),
             role,
@@ -30,11 +30,18 @@ impl User {
     }
 }
 
-pub fn  get_users() -> [User; 2] {
-    [
+pub fn get_users() -> Vec<User> {
+    vec![
         User::new("admin", "password", LoginRole::Admin),
         User::new("subha", "subhapass", LoginRole::User),
     ]
+}
+pub fn get_admin_users() {
+    let users: Vec<String> = get_users()
+        .into_iter()
+        .filter(|u| u.role == LoginRole::Admin)
+        .map(|u| u.username)
+        .collect();
 }
 
 // pub fn login(username: &str, password: &str) -> Option<LoginAction> {
@@ -49,14 +56,14 @@ pub fn  get_users() -> [User; 2] {
 //         }
 //     }
 //     None
-    // let username: String  = username.to_lowercase();
-    // if username == "admin" && password == "password" {
-    //     LoginAction::Granted(LoginRole::Admin)
-    // } else if username == "subha" && password == "subhapass" {
-    //     LoginAction::Granted(LoginRole::User)
-    // } else {
-    //     LoginAction::Denied
-    // }
+// let username: String  = username.to_lowercase();
+// if username == "admin" && password == "password" {
+//     LoginAction::Granted(LoginRole::Admin)
+// } else if username == "subha" && password == "subhapass" {
+//     LoginAction::Granted(LoginRole::User)
+// } else {
+//     LoginAction::Denied
+// }
 // }
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
@@ -76,9 +83,6 @@ pub fn read_line() -> String {
     std::io::stdin().read_line(&mut input);
     input.trim().to_string()
 }
-
-
-
 
 #[cfg(test)]
 mod tests {
