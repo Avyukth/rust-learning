@@ -30,7 +30,7 @@ impl User {
     }
 }
 
-pub fn  get_user() -> [User; 2] {
+pub fn  get_users() -> [User; 2] {
     [
         User::new("admin", "password", LoginRole::Admin),
         User::new("subha", "subhapass", LoginRole::User),
@@ -60,19 +60,15 @@ pub fn  get_user() -> [User; 2] {
 // }
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
-    let username = username.to_lowercase();
-
-    if username != "admin" && username != "bob" {
-        return None;
+    let users = get_users();
+    if let Some(user) = users.iter().find(|user| user.username == username) {
+        if user.password == password {
+            return Some(LoginAction::Granted(user.role.clone()));
+        } else {
+            return Some(LoginAction::Denied);
+        }
     }
-
-    if username == "admin" && password == "password" {
-        Some(LoginAction::Granted(LoginRole::Admin))
-    } else if username == "bob" && password == "password" {
-        Some(LoginAction::Granted(LoginRole::User))
-    } else {
-        Some(LoginAction::Denied)
-    }
+    None
 }
 
 pub fn read_line() -> String {
