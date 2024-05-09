@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum LoginRole {
     Admin,
@@ -30,18 +32,31 @@ impl User {
     }
 }
 
-pub fn get_users() -> Vec<User> {
-    vec![
+// pub fn get_users() -> Vec<User> {
+//     vec![
+//         User::new("admin", "password", LoginRole::Admin),
+//         User::new("subha", "subhapass", LoginRole::User),
+//     ]
+// }
+// pub fn get_admin_users() {
+//     let users: Vec<String> = get_users()
+//         .into_iter()
+//         .filter(|u| u.role == LoginRole::Admin)
+//         .map(|u| u.username)
+//         .collect();
+// }
+
+pub fn get_users() -> HashMap<String, User> {
+    let mut users: HashMap<String, User> = HashMap::new();
+    users.insert(
+        "admin".to_string(),
         User::new("admin", "password", LoginRole::Admin),
+    );
+    users.insert(
+        "subha".to_string(),
         User::new("subha", "subhapass", LoginRole::User),
-    ]
-}
-pub fn get_admin_users() {
-    let users: Vec<String> = get_users()
-        .into_iter()
-        .filter(|u| u.role == LoginRole::Admin)
-        .map(|u| u.username)
-        .collect();
+    );
+    users
 }
 
 // pub fn login(username: &str, password: &str) -> Option<LoginAction> {
@@ -68,13 +83,21 @@ pub fn get_admin_users() {
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
     let users = get_users();
-    if let Some(user) = users.iter().find(|user| user.username == username) {
+    if let Some(user) = users.get(username) {
         if user.password == password {
             return Some(LoginAction::Granted(user.role.clone()));
         } else {
             return Some(LoginAction::Denied);
         }
     }
+
+    // if let Some(user) = users.iter().find(|user| user.username == username) {
+    //     if user.password == password {
+    //         return Some(LoginAction::Granted(user.role.clone()));
+    //     } else {
+    //         return Some(LoginAction::Denied);
+    //     }
+    // }
     None
 }
 
