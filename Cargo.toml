@@ -7,4 +7,4 @@ edition = "2021"
 
 
 [workspace]
-members = [ "authentication","login", "variables"]
+members = [ "authentication","login", "login_app", "variables"]
