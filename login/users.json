@@ -1,4 +1,12 @@
 {
-	"admin": { "username": "admin", "password": "password", "role": "Admin" },
-	"subha": { "username": "subha", "password": "subhapass", "role": "User" }
+	"admin": {
+		"username": "admin",
+		"password": "password",
+		"role": "Admin"
+	},
+	"subha": {
+		"username": "subha",
+		"password": "subhapass",
+		"role": "User"
+	}
 }
