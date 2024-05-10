@@ -13,6 +13,13 @@ pub enum LoginAction {
     Denied,
 }
 
+pub fn hash_password(password: &str) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(password);
+    format!("{:X}", hasher.finalize())
+}
+
 pub fn greet_user(name: &str) -> String {
     format!("Hello {name}")
 }
@@ -28,25 +35,11 @@ impl User {
     pub fn new(username: &str, password: &str, role: LoginRole) -> User {
         User {
             username: username.to_string(),
-            password: password.to_string(),
+            password: hash_password(password),
             role,
         }
     }
 }
-
-// pub fn get_users() -> Vec<User> {
-//     vec![
-//         User::new("admin", "password", LoginRole::Admin),
-//         User::new("subha", "subhapass", LoginRole::User),
-//     ]
-// }
-// pub fn get_admin_users() {
-//     let users: Vec<String> = get_users()
-//         .into_iter()
-//         .filter(|u| u.role == LoginRole::Admin)
-//         .map(|u| u.username)
-//         .collect();
-// }
 
 pub fn get_default_users() -> HashMap<String, User> {
     let mut users: HashMap<String, User> = HashMap::new();
@@ -99,7 +92,9 @@ pub fn get_users() -> HashMap<String, User> {
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
     let users = get_users();
-    if let Some(user) = users.get(username) {
+    let username: String = username.to_lowercase();
+    let password =  hash_password(password);
+    if let Some(user) = users.get(&username) {
         if user.password == password {
             return Some(LoginAction::Granted(user.role.clone()));
         } else {
@@ -119,7 +114,7 @@ pub fn login(username: &str, password: &str) -> Option<LoginAction> {
 
 pub fn read_line() -> String {
     let mut input = String::new();
-    std::io::stdin().read_line(&mut input);
+    let _ = std::io::stdin().read_line(&mut input);
     input.trim().to_string()
 }
 
