@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, path::Path};
 
 #[derive(PartialEq, Eq, Debug, Clone, Serialize, Deserialize)]
 pub enum LoginRole {
@@ -48,7 +48,7 @@ impl User {
 //         .collect();
 // }
 
-pub fn get_users() -> HashMap<String, User> {
+pub fn get_default_users() -> HashMap<String, User> {
     let mut users: HashMap<String, User> = HashMap::new();
     users.insert(
         "admin".to_string(),
@@ -59,6 +59,18 @@ pub fn get_users() -> HashMap<String, User> {
         User::new("subha", "subhapass", LoginRole::User),
     );
     users
+}
+
+pub fn get_users() -> HashMap<String, User> {
+    let users_path = Path::new("users.json");
+    if users_path.exists() {
+        HashMap::new()
+    } else {
+        let users: HashMap<String, User> = get_default_users();
+        let users_json = serde_json::to_string(&users).unwrap();
+        std::fs::write(users_path, users_json).unwrap();
+        users
+    }
 }
 
 // pub fn login(username: &str, password: &str) -> Option<LoginAction> {
