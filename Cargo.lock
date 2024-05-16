@@ -151,6 +151,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "divide_work"
+version = "0.1.0"
+
+[[package]]
+name = "footgun"
+version = "0.1.0"
+
+[[package]]
 name = "generic-array"
 version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -169,6 +177,10 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+
+[[package]]
+name = "hello_thread"
+version = "0.1.0"
 
 [[package]]
 name = "is_terminal_polyfill"
@@ -205,6 +217,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mutexes"
+version = "0.1.0"
+
+[[package]]
+name = "once_cell"
+version = "1.19.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -223,10 +245,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rwlock"
+version = "0.1.0"
+dependencies = [
+ "once_cell",
+]
+
+[[package]]
 name = "ryu"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
+
+[[package]]
+name = "scoped_thread"
+version = "0.1.0"
 
 [[package]]
 name = "serde"
@@ -286,6 +319,10 @@ dependencies = [
  "quote",
  "unicode-ident",
 ]
+
+[[package]]
+name = "thread_pattern"
+version = "0.1.0"
 
 [[package]]
 name = "typenum"
