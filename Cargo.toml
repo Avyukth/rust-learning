@@ -7,4 +7,4 @@ edition = "2021"
 
 
 [workspace]
-members = [ "authentication","login", "login_app", "threads/divide_work", "threads/footgun", "threads/hello_thread", "threads/mutexes", "threads/rwlock", "threads/scoped_thread", "threads/thread_pattern", "variables"]
+members = [ "authentication","login", "login_app", "threads/dashing", "threads/deadlocks", "threads/divide_work", "threads/footgun", "threads/hello_thread", "threads/mutexes", "threads/rwlock", "threads/scoped_thread", "threads/thread_pattern", "variables"]
